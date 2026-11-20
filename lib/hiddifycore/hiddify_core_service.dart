@@ -149,11 +149,11 @@ class HiddifyCoreService with InfraLogger {
           ChangeHiddifySettingsRequest(hiddifySettingsJson: jsonEncode(options.toJson())),
         );
         if (res.messageType != MessageType.EMPTY) return left("${res.messageType} ${res.message}");
-+        if (await core.isBgClientAvailable()) {
-+          await core.bgClient.changeHiddifySettings(
-+            ChangeHiddifySettingsRequest(hiddifySettingsJson: jsonEncode(options.toJson())),
-+          );
-+        }
+        if (await core.isBgClientAvailable()) {
+          await core.bgClient.changeHiddifySettings(
+            ChangeHiddifySettingsRequest(hiddifySettingsJson: jsonEncode(options.toJson())),
+          );
+        }
       } on GrpcError catch (e) {
         if (e.code == StatusCode.unavailable) {
           loggy.debug("background core is not started yet! $e");
